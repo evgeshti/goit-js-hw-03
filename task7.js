@@ -1,66 +1,55 @@
-// Задание 7 - дополнительное, выполнять не обязательно
+const Transaction = {
+  DEPOSIT: 'deposit',
+  WITHDRAW: 'withdraw',
+};
 
-// Напиши скрипт управления личным кабинетом интернет банка. Есть объект account
-//в котором необходимо реализовать методы для работы с балансом и историей транзакций.
+const account = {
+  balance: 0,
+  transactions: [],
 
-// /*
-//  * Типов транзацкий всего два.
-//  * Можно положить либо снять деньги со счета.
-//  */
-// const Transaction = {
-//   DEPOSIT: 'deposit',
-//   WITHDRAW: 'withdraw',
-// };
+  createTransactions(amount, type) {
+    let transaction = {
+      id: this.transactions.lenght + 1,
+      type: type,
+      amount: amount,
+    };
+    return transaction;
+  },
 
-// /*
-//  * Каждая транзакция это объект со свойствами: id, type и amount
-//  */
+  deposit(amount) {
+    this.balance += amount;
+    this.transactions.push(this.createTransaction(amount, Transaction.DEPOSIT));
+  },
 
-// const account = {
-//   // Текущий баланс счета
-//   balance: 0,
+  withdraw(amount) {
+    if (this.balance >= amount) {
+      this.balance -= amount;
+      this.transactions.push(
+        this.createTransaction(amount, Transaction.WITHDRAW),
+      );
+    } else {
+      alert('Запрещено. Не достаточно средств на счету');
+    }
+  },
 
-//   // История транзакций
-//   transactions: [],
+  getBalance() {
+    return this.balance;
+  },
 
-//   /*
-//    * Метод создает и возвращает объект транзакции.
-//    * Принимает сумму и тип транзакции.
-//    */
-//   createTransaction(amount, type) {},
+  getTransactionDetails(id) {
+    for (let transaction of this.transactions) {
+      if (transaction.id === id) {
+        return transaction;
+      }
+    }
+  },
 
-//   /*
-//    * Метод отвечающий за добавление суммы к балансу.
-//    * Принимает сумму танзакции.
-//    * Вызывает createTransaction для создания объекта транзакции
-//    * после чего добавляет его в историю транзакций
-//    */
-//   deposit(amount) {},
-
-//   /*
-//    * Метод отвечающий за снятие суммы с баланса.
-//    * Принимает сумму танзакции.
-//    * Вызывает createTransaction для создания объекта транзакции
-//    * после чего добавляет его в историю транзакций.
-//    *
-//    * Если amount больше чем текущий баланс, выводи сообщение
-//    * о том, что снятие такой суммы не возможно, недостаточно средств.
-//    */
-//   withdraw(amount) {},
-
-//   /*
-//    * Метод возвращает текущий баланс
-//    */
-//   getBalance() {},
-
-//   /*
-//    * Метод ищет и возвращает объект транзации по id
-//    */
-//   getTransactionDetails(id) {},
-
-//   /*
-//    * Метод возвращает количество средств
-//    * определенного типа транзакции из всей истории транзакций
-//    */
-//   getTransactionTotal(type) {},
-// };
+  getTransactions(type) {
+    const summAmount = 0;
+    for (let transaction of this.transactions) {
+      if (transaction.type === type) {
+        summAmount += transaction.amount;
+      }
+    }
+  },
+};
